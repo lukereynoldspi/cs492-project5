@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 
+import 'widgets/add_post_button.dart';
+
+import 'screens/list_screen.dart';
+import 'screens/post_creation_screen.dart';
+import 'screens/post_view_screen.dart';
+
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -10,12 +16,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: {
+        'screens/post_creation_screen.dart': (context) =>
+            const PostCreationScreen(),
+      },
       title: 'Wasteagram',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
@@ -27,12 +37,12 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Wasteagram'),
+        title: const Text('Wasteagram', textAlign: TextAlign.center),
+        centerTitle: true,
       ),
-      body: Center(
-        child: Text(
-          'Math sucks ass',
-          style: TextStyle(fontSize: 24),
+      body: const Center(
+        child: AddPostButton(
+          routeName: "screens/post_creation_screen.dart",
         ),
       ),
     );

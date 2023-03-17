@@ -6,5 +6,5 @@ void main() {
 
   // Initialize any plugins or services here
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
