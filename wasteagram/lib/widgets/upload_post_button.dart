@@ -10,9 +10,9 @@ class UploadPostButton extends StatelessWidget {
       child: Container(
         height: 72.0,
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: const Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
+          children: const [
             SizedBox(width: 24.0),
             Expanded(
               child: Center(
