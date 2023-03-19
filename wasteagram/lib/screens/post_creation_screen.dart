@@ -1,38 +1,56 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import '../widgets/upload_post_button.dart';
-//import 'package:location/location.dart';
+import '../widgets/number_input_field.dart';
+import 'package:image_picker/image_picker.dart';
 
 void main() {
-  PostCreationScreen;
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const PostCreationScreen(),
+    );
+  }
 }
 
 class PostCreationScreen extends StatefulWidget {
   const PostCreationScreen({Key? key}) : super(key: key);
 
   @override
-  _PostCreationScreen createState() => _PostCreationScreen();
+  _PostCreationScreenState createState() => _PostCreationScreenState();
 }
 
-class _PostCreationScreen extends State<PostCreationScreen> {
-  final int _postCount = 0;
+class _PostCreationScreenState extends State<PostCreationScreen> {
+  int wastedItems = 0;
   final String _currentDate = DateTime.now().toString();
-  //LocationData? _locationData;
-/*
-  void _getLocation() async {
-    final location = Location();
-    final hasPermission = await location.requestPermission();
-    if (hasPermission == PermissionStatus.granted) {
-      final data = await location.getLocation();
-      setState(() {
-        _locationData = data;
-      });
-    }
-  } */
+  final picker = ImagePicker();
+  late ImageProvider postImage = const AssetImage('assets/images/test.png');
 
   @override
   void initState() {
     super.initState();
-    //_getLocation();
+    getImageFromGallery();
+  }
+
+  Future<void> getImageFromGallery() async {
+    final pickedFile =
+        await picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
+    setState(() {
+      if (pickedFile != null) {
+        postImage = FileImage(File(pickedFile.path));
+      }
+    });
   }
 
   @override
@@ -42,23 +60,36 @@ class _PostCreationScreen extends State<PostCreationScreen> {
         title: const Text('New Post'),
         centerTitle: true,
       ),
-      body: Column(children: [
-        Text(_currentDate,
+      body: Column(
+        children: [
+          Text(
+            _currentDate,
             style: const TextStyle(
               color: Color.fromARGB(179, 0, 0, 0),
               fontSize: 36.0,
             ),
-            textAlign: TextAlign.center),
-        Center(
-          child: Text(
-            '$_postCount',
-            style: const TextStyle(
-              fontSize: 64.0,
-              fontWeight: FontWeight.bold,
+            textAlign: TextAlign.center,
+          ),
+          Container(
+            width: 200,
+            height: 200,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: postImage,
+              ),
             ),
           ),
-        ),
-      ]),
+          NumberInputField(
+            labelText: 'Number of Wasted Items',
+            numberInput: (value) {
+              setState(() {
+                wastedItems = value;
+              });
+            },
+          ),
+        ],
+      ),
       bottomNavigationBar: const UploadPostButton(),
     );
   }
