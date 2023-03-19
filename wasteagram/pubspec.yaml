@@ -38,7 +38,7 @@ dependencies:
   cloud_firestore: ^4.4.5
   firebase_core: ^2.8.0
   image_picker: ^0.8.7
-  location: ^4.4.0
+  #location: ^4.4.0
 
 dev_dependencies:
   flutter_test:
