@@ -6,15 +6,18 @@ class AddPostButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, routeName);
-        },
-        backgroundColor: Colors.blue,
-        child: const Icon(Icons.camera_alt),
+    return Semantics(
+      label: 'Add a new post button',
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, routeName);
+          },
+          backgroundColor: Colors.blue,
+          child: const Icon(Icons.camera_alt),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

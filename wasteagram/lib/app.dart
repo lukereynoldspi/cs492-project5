@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'widgets/add_post_button.dart';
-
 import 'screens/list_screen.dart';
 import 'screens/post_creation_screen.dart';
 import 'screens/post_view_screen.dart';
@@ -35,16 +33,6 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Wasteagram', textAlign: TextAlign.center),
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: AddPostButton(
-          routeName: "screens/post_creation_screen.dart",
-        ),
-      ),
-    );
+    return const ListScreen();
   }
 }
