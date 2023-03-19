@@ -14,9 +14,15 @@ class ListScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: Column(
-        children: [
-          ListEntry(date: "Thursday, January 30, 2020", quantity: "1"),
-          ListEntry(date: "Thursday, January 30, 2020", quantity: "1"),
+        children: const [
+          ListEntry(
+              routeName: "screens/post_view_screen.dart",
+              date: "Thursday, January 30, 2020",
+              quantity: "1"),
+          ListEntry(
+              routeName: "screens/post_view_screen.dart",
+              date: "Thursday, January 30, 2020",
+              quantity: "1"),
         ],
       ),
       floatingActionButton: const AddPostButton(

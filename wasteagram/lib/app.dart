@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
       routes: {
         'screens/post_creation_screen.dart': (context) =>
             const PostCreationScreen(),
+        'screens/post_view_screen.dart': (context) => const PostViewScreen(),
       },
       title: 'Wasteagram',
       theme: ThemeData(
