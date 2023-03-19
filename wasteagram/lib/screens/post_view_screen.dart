@@ -39,15 +39,10 @@ class _PostViewScreen extends State<PostViewScreen> {
               fontSize: 36.0,
             ),
             textAlign: TextAlign.center),
-        Container(
+        Image(
           width: 200,
           height: 200,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: FileImage(File(imageURL)),
-            ),
-          ),
+          image: NetworkImage(imageURL),
         ),
         Center(
           child: Text(

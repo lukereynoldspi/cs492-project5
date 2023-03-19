@@ -27,7 +27,7 @@ class ListScreen extends StatelessWidget {
                   routeName: "screens/post_view_screen.dart",
                   date: post['date'].toString(),
                   quantity: post['quantity'].toString(),
-                  imageURL: "../assets/test.png",
+                  imageURL: post['imageURL'].toString(),
                   latitude: post['latitude'].toStringAsFixed(2).toString(),
                   longitude: post['longitude'].toStringAsFixed(2).toString(),
                 );

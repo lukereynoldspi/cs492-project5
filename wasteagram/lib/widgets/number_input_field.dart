@@ -4,7 +4,9 @@ class NumberInputField extends StatefulWidget {
   final String labelText;
   final Function(int) numberInput;
 
-  const NumberInputField({Key? key, required this.labelText, required this.numberInput}) : super(key: key);
+  const NumberInputField(
+      {Key? key, required this.labelText, required this.numberInput})
+      : super(key: key);
 
   @override
   _NumberInputFieldState createState() => _NumberInputFieldState();
@@ -15,19 +17,23 @@ class _NumberInputFieldState extends State<NumberInputField> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: TextField(
-        decoration: InputDecoration(
-          labelText: widget.labelText,
-          border: OutlineInputBorder(),
+    return Semantics(
+      label: "Number Input Field",
+      value: input.toString(),
+      child: Center(
+        child: TextField(
+          decoration: InputDecoration(
+            labelText: widget.labelText,
+            border: OutlineInputBorder(),
+          ),
+          keyboardType: TextInputType.number,
+          onChanged: (value) {
+            setState(() {
+              input = int.tryParse(value) ?? 0;
+            });
+            widget.numberInput(input);
+          },
         ),
-        keyboardType: TextInputType.number,
-        onChanged: (value) {
-          setState(() {
-            input = int.tryParse(value) ?? 0;
-          });
-          widget.numberInput(input);
-        },
       ),
     );
   }

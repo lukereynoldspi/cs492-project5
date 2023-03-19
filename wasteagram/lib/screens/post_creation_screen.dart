@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import '../widgets/upload_post_button.dart';
 import '../widgets/number_input_field.dart';
@@ -37,11 +38,14 @@ class PostCreationScreen extends StatefulWidget {
 
 class _PostCreationScreenState extends State<PostCreationScreen> {
   int wastedItems = 0;
+
   final String currentDate =
       DateFormat('EEEE, MMMM d, y').format(DateTime.now());
 
   final picker = ImagePicker();
   late ImageProvider postImage = const AssetImage('../assets/test.png');
+  late File imageFile;
+  final FirebaseStorage storage = FirebaseStorage.instance;
 
   final Location location = Location();
   LocationData? locationData;
@@ -59,6 +63,7 @@ class _PostCreationScreenState extends State<PostCreationScreen> {
     setState(() {
       if (pickedFile != null) {
         postImage = FileImage(File(pickedFile.path));
+        imageFile = File(pickedFile.path);
       }
     });
   }
@@ -125,13 +130,23 @@ class _PostCreationScreenState extends State<PostCreationScreen> {
         ],
       ),
       bottomNavigationBar: UploadPostButton(
-        onPressed: () {
+        onPressed: () async {
           getLocation();
+
+          String imagePath =
+              'post_images/${DateTime.now().millisecondsSinceEpoch}.jpg';
+          TaskSnapshot snapshot = await storage
+              .ref()
+              .child(imagePath)
+              .putData(await imageFile.readAsBytes());
+          String imageURL = await snapshot.ref.getDownloadURL();
+
           FirebaseFirestore.instance.collection('posts').add({
             'date': currentDate,
             'quantity': wastedItems,
             'latitude': locationData!.latitude,
             'longitude': locationData!.longitude,
+            'imageURL': imageURL,
           });
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text('Post uploaded successfully!'),
