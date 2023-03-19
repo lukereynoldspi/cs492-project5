@@ -13,17 +13,24 @@ class ListScreen extends StatelessWidget {
         title: const Text('Wasteagram', textAlign: TextAlign.center),
         centerTitle: true,
       ),
-      body: Column(
-        children: const [
-          ListEntry(
-              routeName: "screens/post_view_screen.dart",
-              date: "Thursday, January 30, 2020",
-              quantity: "1"),
-          ListEntry(
-              routeName: "screens/post_view_screen.dart",
-              date: "Thursday, January 30, 2020",
-              quantity: "1"),
-        ],
+      body: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+        builder: (context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemCount: snapshot.data.docs.length,
+              itemBuilder: (context, index) {
+                var post = snapshot.data.docs[index];
+                return ListEntry(
+                  routeName: "screens/post_view_screen.dart",
+                  date: post['date'].toString(),
+                  quantity: post['quantity'].toString(),
+                );
+              },
+            );
+          }
+          return const SizedBox.shrink();
+        },
       ),
       floatingActionButton: const AddPostButton(
         routeName: "screens/post_creation_screen.dart",

@@ -41,6 +41,17 @@ class _PostCreationScreenState extends State<PostCreationScreen> {
   final picker = ImagePicker();
   late ImageProvider postImage = const AssetImage('assets/images/test.png');
 
+  void uploadPost() async {
+    FirebaseFirestore.instance.collection('posts').add({
+      'date': currentDate,
+      'quantity': wastedItems,
+    });
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text('Post uploaded successfully!'),
+      duration: Duration(seconds: 2),
+    ));
+  }
+
   @override
   void initState() {
     super.initState();
@@ -95,7 +106,12 @@ class _PostCreationScreenState extends State<PostCreationScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: const UploadPostButton(),
+      bottomNavigationBar: UploadPostButton(
+        onPressed: () {
+          uploadPost;
+          print("bruh");
+        },
+      ),
     );
   }
 }
