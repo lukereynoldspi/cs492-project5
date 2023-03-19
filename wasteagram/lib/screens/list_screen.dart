@@ -28,8 +28,8 @@ class ListScreen extends StatelessWidget {
                   date: post['date'].toString(),
                   quantity: post['quantity'].toString(),
                   imageURL: "../assets/test.png",
-                  latitude: "1.0".toString(),
-                  longitude: "1.0".toString(),
+                  latitude: post['latitude'].toStringAsFixed(2).toString(),
+                  longitude: post['longitude'].toStringAsFixed(2).toString(),
                 );
               },
             );

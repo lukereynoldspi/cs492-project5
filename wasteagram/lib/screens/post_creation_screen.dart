@@ -39,13 +39,18 @@ class _PostCreationScreenState extends State<PostCreationScreen> {
   int wastedItems = 0;
   final String currentDate =
       DateFormat('EEEE, MMMM d, y').format(DateTime.now());
+
   final picker = ImagePicker();
   late ImageProvider postImage = const AssetImage('../assets/test.png');
+
+  final Location location = Location();
+  LocationData? locationData;
 
   @override
   void initState() {
     super.initState();
     getImageFromGallery();
+    requestLocationPermission();
   }
 
   Future<void> getImageFromGallery() async {
@@ -56,6 +61,29 @@ class _PostCreationScreenState extends State<PostCreationScreen> {
         postImage = FileImage(File(pickedFile.path));
       }
     });
+  }
+
+  Future<void> requestLocationPermission() async {
+    final bool isLocationEnabled = await location.serviceEnabled();
+    if (!isLocationEnabled) {
+      await location.requestService();
+    }
+
+    final PermissionStatus permission = await location.hasPermission();
+    if (permission == PermissionStatus.denied) {
+      await location.requestPermission();
+    }
+  }
+
+  Future<void> getLocation() async {
+    try {
+      final LocationData tempLocationData = await location.getLocation();
+      setState(() {
+        locationData = tempLocationData;
+      });
+    } catch (e) {
+      print('Could not get location: $e');
+    }
   }
 
   @override
@@ -98,9 +126,12 @@ class _PostCreationScreenState extends State<PostCreationScreen> {
       ),
       bottomNavigationBar: UploadPostButton(
         onPressed: () {
+          getLocation();
           FirebaseFirestore.instance.collection('posts').add({
             'date': currentDate,
             'quantity': wastedItems,
+            'latitude': locationData!.latitude,
+            'longitude': locationData!.longitude,
           });
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text('Post uploaded successfully!'),
