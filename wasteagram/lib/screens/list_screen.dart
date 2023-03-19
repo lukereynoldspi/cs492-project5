@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:wasteagram/widgets/list_entry.dart';
+import '../models/list_entry.dart';
 import '../widgets/add_post_button.dart';
 
 class ListScreen extends StatelessWidget {
@@ -27,6 +27,9 @@ class ListScreen extends StatelessWidget {
                   routeName: "screens/post_view_screen.dart",
                   date: post['date'].toString(),
                   quantity: post['quantity'].toString(),
+                  imageURL: "amogus",
+                  latitude: 1.0,
+                  longitude: 1.0,
                 );
               },
             );

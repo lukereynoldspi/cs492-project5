@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 
 class ListEntry extends StatelessWidget {
+  final String routeName;
   final String date;
   final String quantity;
-  final String routeName;
+  final String imageURL;
+  final double latitude;
+  final double longitude;
 
-  const ListEntry(
-      {super.key,
-      required this.routeName,
-      required this.date,
-      required this.quantity});
+  const ListEntry({
+    super.key,
+    required this.routeName,
+    required this.date,
+    required this.quantity,
+    required this.imageURL,
+    required this.latitude,
+    required this.longitude,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +25,13 @@ class ListEntry extends StatelessWidget {
         Navigator.pushNamed(
           context,
           routeName,
-          arguments: {'date': date, 'quantity': quantity,},
+          arguments: {
+            'date': date,
+            'quantity': quantity,
+            'imageURL': imageURL,
+            'latitude': latitude,
+            'longitude': longitude,
+          },
         );
       },
       child: ListTile(
