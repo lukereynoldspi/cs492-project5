@@ -1,9 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../widgets/upload_post_button.dart';
 import '../widgets/number_input_field.dart';
-import 'package:image_picker/image_picker.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,7 +36,8 @@ class PostCreationScreen extends StatefulWidget {
 
 class _PostCreationScreenState extends State<PostCreationScreen> {
   int wastedItems = 0;
-  final String _currentDate = DateTime.now().toString();
+  final String currentDate =
+      DateFormat('EEEE, MMMM d, y').format(DateTime.now());
   final picker = ImagePicker();
   late ImageProvider postImage = const AssetImage('assets/images/test.png');
 
@@ -61,9 +65,10 @@ class _PostCreationScreenState extends State<PostCreationScreen> {
         centerTitle: true,
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Text(
-            _currentDate,
+            currentDate,
             style: const TextStyle(
               color: Color.fromARGB(179, 0, 0, 0),
               fontSize: 36.0,
