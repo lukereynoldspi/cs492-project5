@@ -15,12 +15,14 @@ class ListScreen extends StatelessWidget {
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('posts').snapshots(),
-        builder: (context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasData &&
+              snapshot.data != null &&
+              snapshot.data!.docs.isNotEmpty) {
             return ListView.builder(
-              itemCount: snapshot.data.docs.length,
+              itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, index) {
-                var post = snapshot.data.docs[index];
+                var post = snapshot.data!.docs[index];
                 return ListEntry(
                   routeName: "screens/post_view_screen.dart",
                   date: post['date'].toString(),
@@ -28,8 +30,11 @@ class ListScreen extends StatelessWidget {
                 );
               },
             );
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           }
-          return const SizedBox.shrink();
         },
       ),
       floatingActionButton: const AddPostButton(
