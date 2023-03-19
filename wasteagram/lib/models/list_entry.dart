@@ -5,8 +5,8 @@ class ListEntry extends StatelessWidget {
   final String date;
   final String quantity;
   final String imageURL;
-  final double latitude;
-  final double longitude;
+  final String latitude;
+  final String longitude;
 
   const ListEntry({
     super.key,

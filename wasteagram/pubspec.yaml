@@ -39,6 +39,7 @@ dependencies:
   firebase_core: ^2.8.0
   image_picker: ^0.8.7
   intl: ^0.18.0
+  location: ^4.4.0
   #location: ^4.4.0
 
 dev_dependencies:

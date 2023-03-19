@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:location/location.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../widgets/upload_post_button.dart';
@@ -39,7 +40,7 @@ class _PostCreationScreenState extends State<PostCreationScreen> {
   final String currentDate =
       DateFormat('EEEE, MMMM d, y').format(DateTime.now());
   final picker = ImagePicker();
-  late ImageProvider postImage = const AssetImage('assets/images/test.png');
+  late ImageProvider postImage = const AssetImage('../assets/test.png');
 
   @override
   void initState() {
