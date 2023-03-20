@@ -23,14 +23,15 @@ class ListScreen extends StatelessWidget {
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, index) {
                 var post = snapshot.data!.docs[index];
-                return ListEntry(
-                  routeName: "screens/post_view_screen.dart",
-                  date: post['date'].toString(),
-                  quantity: post['quantity'].toString(),
-                  imageURL: post['imageURL'].toString(),
-                  latitude: post['latitude'].toStringAsFixed(2).toString(),
-                  longitude: post['longitude'].toStringAsFixed(2).toString(),
-                );
+                ListEntryModel listEntryData = ListEntryModel(
+                    routeName: "screens/post_view_screen.dart",
+                    date: post['date'].toString(),
+                    quantity: post['quantity'].toString(),
+                    imageURL: post['imageURL'].toString(),
+                    latitude: post['latitude'].toStringAsFixed(2).toString(),
+                    longitude: post['longitude'].toStringAsFixed(2).toString());
+                ListEntryWidget widget = ListEntryWidget(model: listEntryData);
+                return widget;
               },
             );
           } else {

@@ -131,6 +131,7 @@ class _PostCreationScreenState extends State<PostCreationScreen> {
       ),
       bottomNavigationBar: UploadPostButton(
         onPressed: () async {
+          const Center(child: CircularProgressIndicator());
           getLocation();
 
           String imagePath =
